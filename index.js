@@ -7,7 +7,7 @@ var bird = {
     startColor : 'blue',
     startFlag : false,
     minTop: 0,
-    maxTop: 665,
+    maxTop: 670,
     init: function(){
         this.initDate();
         this.animate();
@@ -19,6 +19,7 @@ var bird = {
         this.oStart = this.el.getElementsByClassName('start')[0];
         this.oScore = this.el.getElementsByClassName('score')[0];
         this.oMask = this.el.getElementsByClassName('mask')[0];
+        this.oEnd = this.el.getElementsByClassName('end')[0];
     },
     // animate管理所有动画函数
     animate: function(){
@@ -85,6 +86,7 @@ var bird = {
      */
     handel : function(){
         this.handelStart();
+        this.handelClick();
     },
     handelStart: function(){
         var self = this;
@@ -93,10 +95,24 @@ var bird = {
             self.oStart.style.display = "none";
             self.oScore.style.display = "block";
             self.skyStep = 5;
-            self.oBrid.style.left = '80px';
+            self.oBrid.style.left = '100px';
+            self.oBrid.style.transition = 'none';
         };  
+    },
+    // 点击事件  点击鼠标，小鸟往上飞
+    handelClick: function(){
+        var self = this;
+        this.el.onclick = function(e){
+            if(!e.target.classList.contains('start')){
+                self.birdStepY = -10;
+            }   
+        }
     },
     failGame: function(){
         clearInterval(this.timer);
+        this.oScore.style.display = 'none';
+        this.oBrid.style.display = 'none';
+        this.oMask.style.display = 'block';
+        this.oEnd.style.display = 'block';
     }
 };
